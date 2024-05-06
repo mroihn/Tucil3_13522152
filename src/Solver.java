@@ -33,13 +33,6 @@ public class Solver {
         return words;
     }
 
-    // Method untuk memilih kata secara acak dari list kata
-    public String pickRandomWord(List<String> words) {
-        Random random = new Random();
-        int randomIndex = random.nextInt(words.size());
-        return words.get(randomIndex);
-    }
-
     public boolean isNeighbor(String word1, String word2) {
         int diff = 0;
         word1 = word1.toLowerCase();
@@ -133,39 +126,4 @@ public class Solver {
         return wordMap;
     }
 
-    public void printHashMap(Map<String, List<String>> hashMap) {
-        // Iterasi melalui setiap entri dalam HashMap
-        for (Map.Entry<String, List<String>> entry : hashMap.entrySet()) {
-            String key = entry.getKey(); // Mendapatkan kunci
-            List<String> values = entry.getValue(); // Mendapatkan nilai
-
-            // Mencetak kunci
-            System.out.println(key + ":");
-
-            // Mencetak nilai-nilai
-            for (String value : values) {
-                System.out.print(value + " ");
-            }
-
-            // Pindah ke baris baru untuk entri berikutnya
-            System.out.println();
-        }
-    }
-
-    public void printPath(Node target) {
-		List<Node> path = new ArrayList<Node>();
-		for (Node node = target; node != null; node = node.getParent()) {
-			path.add(node);
-			// System.out.println(node.getValue());
-		}
-
-		Collections.reverse(path);
-		System.out.println("Path :");
-		for (Node n : path) {
-			System.out.print(n.getValue() + " ");
-		}
-		System.out.println();
-		System.out.println("Cost :"+String.valueOf(target.getCost()));
-
-	}
 }

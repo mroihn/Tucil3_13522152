@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,6 @@ public class GBFS {
         while (!q.isEmpty() && (found == false)) {
             Node curr = q.poll();
             visited.add(curr);
-            System.out.println(curr.getValue());
 
             if (curr.getValue().equals(end.getValue())) {
                 end = curr;
@@ -32,11 +32,10 @@ public class GBFS {
             }
         }
         if (found) {
-            Solver s = new Solver();
-		    s.printPath(end);
+		    printPath(end);
         }
         else {
-            System.out.println("notfound");
+            System.out.println("Path Not Found");
         }
     }
     
@@ -67,12 +66,31 @@ public class GBFS {
     }
     
     public boolean cekVisited(List<Node> visited, Node nodeCek) {
-		for (Node n : visited) {
-			if (n.getValue() == nodeCek.getValue()) {
-				return true;
-			}
+        for (Node n : visited) {
+            if (n.getValue() == nodeCek.getValue()) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+    
+    public void printPath(Node target) {
+		List<Node> path = new ArrayList<Node>();
+		for (Node node = target; node != null; node = node.getParent()) {
+			path.add(node);
+			// System.out.println(node.getValue());
 		}
-		return false;
+
+		Collections.reverse(path);
+        System.out.println("Path :");
+        int cost = -1;
+		for (Node n : path) {
+            System.out.print(n.getValue() + " ");
+            cost++;
+		}
+		System.out.println();
+		System.out.println("Cost :"+cost);
 
 	}
 }

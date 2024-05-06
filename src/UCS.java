@@ -61,10 +61,12 @@ public class UCS {
 				}
 			}
 		}
-		// Node p = end.getParent();
-		// System.out.println("bapak west : "+p.getValue());
-		Solver s = new Solver();
-		s.printPath(end);
+		if (found) {
+		    printPath(end);
+        }
+        else {
+            System.out.println("Path Not Found");
+        }
 	}
 	
 	public boolean cekVisited(List<Node> visited, Node nodeCek) {
@@ -97,11 +99,22 @@ public class UCS {
 		}
     }
 	
-	public void printPq(PriorityQueue<Node> pq) {
-        PriorityQueue<Node> copyPq = new PriorityQueue<>(pq);
-        while (!copyPq.isEmpty()) {
-            Node node = copyPq.poll();
-            System.out.println("Word: " + node.getValue() + ", Path Cost: " + node.getCost());
-        }
-    }
+	public void printPath(Node target) {
+		List<Node> path = new ArrayList<Node>();
+		for (Node node = target; node != null; node = node.getParent()) {
+			path.add(node);
+			// System.out.println(node.getValue());
+		}
+
+		Collections.reverse(path);
+        System.out.println("Path :");
+        int cost = -1;
+		for (Node n : path) {
+            System.out.print(n.getValue() + " ");
+            cost++;
+		}
+		System.out.println();
+		System.out.println("Cost :"+cost);
+
+	}
 }

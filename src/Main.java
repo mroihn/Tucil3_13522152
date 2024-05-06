@@ -11,19 +11,28 @@ public class Main {
         String startWord = "";
         String endWord = "";
         List<String> words = new ArrayList<String>();
-        String fileName = "word2.txt";
+        String fileName = "./wordlist/word2.txt";
         Solver solver = new Solver();
         try {
             words = solver.readWordsFromFile(fileName);
 
-            if (!words.isEmpty()) {
+            boolean valid = false;
+            
+            while(!valid) {
                 System.out.print("Masukkan Startword:");
                 startWord = scanner.nextLine();
                 System.out.println("Start Word: " + startWord);
                 System.out.print("Masukkan Endword:");
                 endWord = scanner.nextLine();
                 System.out.println("End Word: " + endWord);
-                // System.out.println("Panjang list (jumlah elemen): " + words.size());
+                
+                if (startWord.length() == endWord.length()) {
+                    valid = true;
+                }
+
+                if (!valid) {
+                    System.out.println("Masukkan salah, ulangi !!!");
+                }
             } 
 
         } catch (FileNotFoundException e) {
@@ -31,7 +40,7 @@ public class Main {
         }
 
         // solver.buildGraph(words);
-        Map<String, List<String>> wordMap = solver.readHashMapFromFile("graph2.txt");
+        Map<String, List<String>> wordMap = solver.readHashMapFromFile("./wordlist/graph2.txt");
         // solver.saveMapToFile("graph2.txt");
 
         System.out.println("Pilih Algoritma:");
@@ -40,33 +49,51 @@ public class Main {
         System.out.println("3. A*");
         String pilihan = scanner.nextLine();
 
+        Node start = new Node(startWord.toLowerCase());
+        start.setCost(0);
+        List<String> child = wordMap.get(startWord.toLowerCase());
+        start.setChild(child);
+
+        Node end = new Node(endWord.toLowerCase());
+        end.setCost(0);
+        child = wordMap.get(endWord.toLowerCase());
+        end.setChild(child);
+
         if (pilihan.equals("1")) {
             UCS ucs = new UCS();
-            Node start = new Node(startWord.toLowerCase());
-            start.setCost(0);
-            List<String> child = wordMap.get(startWord.toLowerCase());
-            start.setChild(child);
-
-            Node end = new Node(endWord.toLowerCase());
-            end.setCost(0);
-            child = wordMap.get(endWord.toLowerCase());
-            end.setChild(child);
+           
             System.out.println("Finding Shortest Path....");
+            long startTime = System.currentTimeMillis();
+
             ucs.solveUCS(start, end, wordMap);
+
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            System.out.println("Execution time: " + executionTime + " ms");
         }
         else if (pilihan.equals("2")) {
             GBFS gbfs = new GBFS();
-            Node start = new Node(startWord.toLowerCase());
-            start.setCost(0);
-            List<String> child = wordMap.get(startWord.toLowerCase());
-            start.setChild(child);
-
-            Node end = new Node(endWord.toLowerCase());
-            end.setCost(0);
-            child = wordMap.get(endWord.toLowerCase());
-            end.setChild(child);
+            
             System.out.println("Finding Shortest Path....");
+            long startTime = System.currentTimeMillis();
+
             gbfs.solveGBFS(start, end, wordMap);
+
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            System.out.println("Execution time: " + executionTime + " ms");
+        }
+        else if (pilihan.equals("3")) {
+            AS as = new AS();
+            
+            System.out.println("Finding Shortest Path....");
+            long startTime = System.currentTimeMillis();
+
+            as.solveAS(start, end, wordMap);
+
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            System.out.println("Execution time: " + executionTime + " ms");
         }
 
     }
