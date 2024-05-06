@@ -11,7 +11,7 @@ public class Main {
         String startWord = "";
         String endWord = "";
         List<String> words = new ArrayList<String>();
-        String fileName = "./wordlist/word2.txt";
+        String fileName = "./wordlist/word.txt";
         Solver solver = new Solver();
         try {
             words = solver.readWordsFromFile(fileName);
@@ -31,7 +31,12 @@ public class Main {
                 }
 
                 if (!valid) {
-                    System.out.println("Masukkan salah, ulangi !!!");
+                    System.out.println("Panjang startword dan endword harus sama, ulangi masukkan !!!");
+                }
+
+                if (!words.contains(startWord.toLowerCase()) || !words.contains(endWord.toLowerCase())) {
+                    valid = false;
+                    System.out.println("Kata tidak ada di dictionary, ulangi masukkan !!!");
                 }
             } 
 
@@ -40,8 +45,8 @@ public class Main {
         }
 
         // solver.buildGraph(words);
-        Map<String, List<String>> wordMap = solver.readHashMapFromFile("./wordlist/graph2.txt");
-        // solver.saveMapToFile("graph2.txt");
+        Map<String, List<String>> wordMap = solver.readHashMapFromFile("./wordlist/graph.txt");
+        // solver.saveMapToFile("graph.txt");
 
         System.out.println("Pilih Algoritma:");
         System.out.println("1. UCS");
