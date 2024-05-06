@@ -1,11 +1,8 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
-import java.util.Set;
 
 public class UCS extends Algo {
 	public void solveUCS(Node start, Node end, Map<String, List<String>> wordMap) {
@@ -14,7 +11,7 @@ public class UCS extends Algo {
 				new Comparator<Node>() {
 					public int compare(Node i, Node j) {
 						if (i.getCost() > j.getCost()) {
-							return 1;
+							return 1;                          // Comperator yg ngebuat node yang memiliki cost terendah memiliki prioritas tertinggi
 						} else if (i.getCost() < j.getCost()) {
 							return -1;
 						} else {
@@ -29,6 +26,7 @@ public class UCS extends Algo {
 		pq.add(start);
 
 		while (!pq.isEmpty() && (found == false)) {
+			nodeCnt++;
 			// printPq(pq);
 			Node curr = pq.poll();
 			visited.add(curr);
@@ -40,6 +38,7 @@ public class UCS extends Algo {
 
 			for (Node n : curr.getChilds()) {
 
+				// Kalo node belum dilihat dan gak ada di queue, tambahin node ke queue
 				if (!cekVisited(visited, n) && !inQ(pq, n)) {
 					// System.out.println("currCost : " + curr.getCost() + " word " + n.getValue());
 					n.setCost(curr.getCost() + 1);
@@ -50,6 +49,7 @@ public class UCS extends Algo {
 
 				}
 
+				// Kalo node ada di queue tapi cost node yang ada di queue lebih besar dibanding yang dicek sekarang, tambahin node ke queue
 				else if (inQ(pq, n) && ((curr.getCost() + 1) < n.getCost())) {
 					System.out.println("currCost : " + curr.getCost() + " previousCost " + n.getCost());
 					n.setCost(curr.getCost() + 1);

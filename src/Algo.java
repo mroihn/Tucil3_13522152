@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class Algo {
-    public boolean cekVisited(List<Node> visited, Node nodeCek) {
+    protected int nodeCnt = 0; // Buat nyimpen jumlah node yang dikunjungi
+
+    public boolean cekVisited(List<Node> visited, Node nodeCek) { // Fungsi buat ngecek node udah dikunjungi atau belum
 		for (Node n : visited) {
 			if (n.getValue() == nodeCek.getValue()) {
 				return true;
@@ -14,7 +16,7 @@ public class Algo {
 
 	}
 	
-	public boolean inQ(PriorityQueue<Node> pq, Node nodeCek) {
+	public boolean inQ(PriorityQueue<Node> pq, Node nodeCek) { // Fungsi buat ngecek node ada didalam queue atau nggak
 		PriorityQueue<Node> copyPq = new PriorityQueue<>(pq);
 		while (!copyPq.isEmpty()) {
 			Node node = copyPq.poll();
@@ -25,7 +27,7 @@ public class Algo {
 		return false;
 	}
 	
-    public void delFromQ(PriorityQueue<Node> pq, Node nodeCek) {
+    public void delFromQ(PriorityQueue<Node> pq, Node nodeCek) { // Fungsi buat ngehapus node dari queue
         while (!pq.isEmpty()) {
             Node node = pq.poll();
             if (node.getValue() == nodeCek.getValue()) {
@@ -34,7 +36,7 @@ public class Algo {
         }
     }
 
-    public Integer costFromGoal(String word1, String word2) {
+    public Integer costFromGoal(String word1, String word2) { // Fungsi buat ngehitung perbedaan huruf
         int diff = 0;
         word1 = word1.toLowerCase();
         word2 = word2.toLowerCase();
@@ -47,7 +49,7 @@ public class Algo {
         return diff;
     }
 
-    public Node findShortest(List<Node> childs,Node Goal) {
+    public Node findShortest(List<Node> childs,Node Goal) { // Fungsi buat cari node paling deket dari goal
         Node shortest = new Node("kosong");
         for (Node n : childs) {
             if (shortest.getValue().equals("kosong")) {
@@ -60,7 +62,7 @@ public class Algo {
         return shortest;
     }
 	
-	public void printPath(Node target) {
+	public void printPath(Node target) { // Fungsi buat cetak path
 		List<Node> path = new ArrayList<Node>();
 		for (Node node = target; node != null; node = node.getParent()) {
 			path.add(node);
@@ -75,7 +77,8 @@ public class Algo {
             cost++;
 		}
 		System.out.println();
-		System.out.println("Cost :"+cost);
+        System.out.println("Cost :" + cost);
+        System.out.println("Jumlah node dikunjungi :"+nodeCnt);
 
 	}
 }

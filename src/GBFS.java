@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +13,10 @@ public class GBFS extends Algo{
         q.add(start);
 
         while (!q.isEmpty() && (found == false)) {
+            nodeCnt++;
             Node curr = q.poll();
             visited.add(curr);
-
+            
             if (curr.getValue().equals(end.getValue())) {
                 end = curr;
                 found = true;
@@ -24,6 +24,7 @@ public class GBFS extends Algo{
 
             Node nearest = findShortest(curr.getChilds(), end);
 
+            // Kalo node belum dilihat dan gak ada di queue, tambahin node ke queue
             if (!cekVisited(visited, nearest)) {
                 nearest.setParent(curr);
                 List<String> child = wordMap.get(nearest.getValue());
